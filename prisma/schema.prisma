@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model territories {
+  territory_id          Int    @id @default(autoincrement())
+  territory_description String
+  region_id             Int
+  region                region @relation(fields: [region_id], references: [region_id])
+}
+
+model region {
+  region_id          Int           @id @default(autoincrement())
+  region_description String
+  territories        territories[]
+}
